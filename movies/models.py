@@ -1,4 +1,5 @@
 from django.db import models
+from movies.model_mixins import TMDBAPIMixin
 
 
 class Image(models.Model):
@@ -13,7 +14,7 @@ class Image(models.Model):
     still_sizes = models.CharField(max_length=200)
 
 
-class Movie(models.Model):
+class Movie(TMDBAPIMixin, models.Model):
     """Represents a movie with its basic information, such as title, release date, runtime, and genres."""
 
     tmdb_id = models.IntegerField(unique=True)

@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "movies",
+    # 3rd party
+    "django_extensions",
 ]
 
 MIDDLEWARE = [

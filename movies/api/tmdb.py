@@ -11,9 +11,8 @@ from movies.exceptions import (
 
 
 class TMDBAPIMixin:
-    def __init__(self, api_key: str, api_url: str | None = None):
-        self.api_key = api_key or settings.TMDB_API_KEY
-        self.api_url = api_url or "https://api.themoviedb.org/3"
+    api_key = settings.TMDB_API_KEY
+    api_url = "https://api.themoviedb.org/3"
 
     def _make_request(self, method: str, endpoint: str, params: dict = None) -> dict:
         try:

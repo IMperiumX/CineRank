@@ -1,7 +1,6 @@
-from api.tmdb import TMDBAPIMixin
 from django.db import models
 
-from .models import Cast, Crew
+from movies.api.tmdb import TMDBAPIMixin
 
 
 class MovieQuerySet(models.QuerySet):
@@ -14,24 +13,5 @@ class MovieQuerySet(models.QuerySet):
                 "overview": movie_data["overview"],
                 # Update other fields as needed
             },
-        )
-        # Update cast and crew data
-        movie.cast.set(
-            [
-                Cast.objects.get_or_create(
-                    actor_id=cast["actor_id"],
-                    character_name=cast["character_name"],
-                    defaults={"name": cast["name"]},
-                )[0]
-                for cast in movie_data["credits"]["cast"]
-            ]
-        )
-        movie.crew.set(
-            [
-                Crew.objects.get_or_create(
-                    crew_id=crew["id"], job=crew["job"], defaults={"name": crew["name"]}
-                )[0]
-                for crew in movie_data["credits"]["crew"]
-            ]
         )
         return movie

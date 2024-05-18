@@ -1,5 +1,7 @@
 from django.db import models
-from movies.model_mixins import TMDBAPIMixin
+from movies.apis.tmdb import TMDBAPIMixin
+
+from .managers import MovieQuerySet
 
 
 class Image(models.Model):
@@ -34,6 +36,8 @@ class Movie(TMDBAPIMixin, models.Model):
     tagline = models.CharField(max_length=200)
     video = models.BooleanField()
     images = models.ForeignKey(Image, on_delete=models.CASCADE)
+
+    objects = MovieQuerySet.as_manager()
 
 
 class Cast(models.Model):

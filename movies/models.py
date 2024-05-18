@@ -1,5 +1,5 @@
 from django.db import models
-from movies.apis.tmdb import TMDBAPIMixin
+from movies.api.tmdb import TMDBAPIMixin
 
 from .managers import MovieQuerySet
 

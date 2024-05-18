@@ -1,4 +1,4 @@
-from apis.tmdb import TMDBAPIMixin
+from api.tmdb import TMDBAPIMixin
 from django.db import models
 
 from .models import Cast, Crew

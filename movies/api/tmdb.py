@@ -16,8 +16,8 @@ class TMDBAPIMixin:
 
     def _make_request(self, method: str, endpoint: str, params: dict = None) -> dict:
         try:
-            response = requests.request(
-                method, f"{self.api_url}/{endpoint}", params=params
+            response = getattr(requests, method.lower())(
+                f"{self.api_url}/{endpoint}", params=params
             )
             response.raise_for_status()  # Raise an exception for 4xx or 5xx status codes
             return response.json()

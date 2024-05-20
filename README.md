@@ -11,7 +11,7 @@ This is a Django-based API that allows users to set and manage their top 100 mov
 - User authentication and authorization
 - Movie data fetched from TMDb API
 - Basic CRUD operations for movies: + Create: Add a new movie to a user's list + Read: Retrieve a user's movie list + Update: Edit a movie's ranking in a user's list + Delete: Remove a movie from a user's list
-- Movie ranking and sorting functionality
+- Movie ranking and sorting system
 
 ## **Setup**
 
@@ -19,7 +19,7 @@ This is a Django-based API that allows users to set and manage their top 100 mov
 
 - Python 3.9+
 - Django 3.2+
-- TMDb API key (obtain from http://tmdb.org)
+- TMDb API key (obtain from <http://tmdb.org>)
 
 ### Installation
 
@@ -85,3 +85,21 @@ This project is licensed under the MIT License. See [LICENSE](LICENSE) for detai
 ## **Contact**
 
 If you have any questions or need help with the project, feel free to reach out to [your email address or GitHub username].
+
+## Movie Ranking Engine
+
+`CineRank` includes a powerful movie ranking engine designed to provide personalized movie recommendations. The engine leverages a combination of data-driven factors and user preferences to generate dynamic rankings.
+
+### How It Works
+
+1. **Weighted Factors:**
+
+   - **Popularity (TMDB):** Indicates general interest and trendiness.
+   - **Vote Average (TMDB):** Reflects critical and audience reception.
+   - **Vote Count (TMDB):** Provides context to the average; higher counts mean more reliable averages.
+   - **Revenue (if available):** Commercial success can be an indicator of quality or popularity.
+   - **Recency:** Recent movies might be more relevant to users.
+   - **User Ratings:** Personalized ratings directly influence recommendations.
+   - **Genre Preferences:** User-selected genres are boosted in the rankings.
+
+2. **Normalization & Scoring:** Each factor is normalized to a standard scale and combined using a weighted formula. The weights determine the importance of each factor, allowing for customization of the ranking logic.

@@ -1,6 +1,19 @@
+# -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import Movie
+from .models import Genre, Collection, Movie
+
+
+@admin.register(Genre)
+class GenreAdmin(admin.ModelAdmin):
+    list_display = ("id", "name")
+    search_fields = ("name",)
+
+
+@admin.register(Collection)
+class CollectionAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "poster_path", "backdrop_path")
+    search_fields = ("name",)
 
 
 @admin.register(Movie)
@@ -8,13 +21,11 @@ class MovieAdmin(admin.ModelAdmin):
     list_display = (
         "id",
         "tmdb_id",
+        "imdb_id",
         "adult",
         "backdrop_path",
-        "belongs_to_collection",
         "budget",
-        "genres",
         "homepage",
-        "imdb_id",
         "origin_country",
         "original_language",
         "original_title",
@@ -33,5 +44,7 @@ class MovieAdmin(admin.ModelAdmin):
         "video",
         "vote_average",
         "vote_count",
+        "collection",
+        "genre",
     )
-    list_filter = ("adult", "release_date", "video")
+    list_filter = ("adult", "release_date", "video", "collection", "genre")

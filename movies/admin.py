@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 from django.contrib import admin
 
-from .models import Genre, Collection, Movie
+from .models import Genre, Collection, Language, ProductCountry, ProductCompany, Movie
 
 
 @admin.register(Genre)
@@ -13,6 +12,24 @@ class GenreAdmin(admin.ModelAdmin):
 @admin.register(Collection)
 class CollectionAdmin(admin.ModelAdmin):
     list_display = ("id", "name", "poster_path", "backdrop_path")
+    search_fields = ("name",)
+
+
+@admin.register(Language)
+class LanguageAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "iso_639_1", "english_name")
+    search_fields = ("name",)
+
+
+@admin.register(ProductCountry)
+class ProductCountryAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "iso_3166_1")
+    search_fields = ("name",)
+
+
+@admin.register(ProductCompany)
+class ProductCompanyAdmin(admin.ModelAdmin):
+    list_display = ("id", "name", "logo_path", "origin_country")
     search_fields = ("name",)
 
 
@@ -32,19 +49,28 @@ class MovieAdmin(admin.ModelAdmin):
         "overview",
         "popularity",
         "poster_path",
-        "production_companies",
-        "production_countries",
         "release_date",
         "revenue",
         "runtime",
-        "spoken_languages",
         "status",
         "tagline",
         "title",
         "video",
         "vote_average",
         "vote_count",
+        "production_company",
+        "production_country",
         "collection",
+        "spoken_language",
         "genre",
     )
-    list_filter = ("adult", "release_date", "video", "collection", "genre")
+    list_filter = (
+        "adult",
+        "release_date",
+        "video",
+        "production_company",
+        "production_country",
+        "collection",
+        "spoken_language",
+        "genre",
+    )

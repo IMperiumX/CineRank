@@ -1,4 +1,5 @@
 from django.db import models
+
 from movies.api.tmdb import TMDBAPIMixin
 
 from .managers import MovieQuerySet
@@ -16,6 +17,29 @@ class Collection(models.Model):
     backdrop_path = models.CharField(max_length=255)
 
 
+class Language(models.Model):
+    """Represents a spoken language in the movie."""
+
+    name = models.CharField(max_length=255)
+    iso_639_1 = models.CharField(max_length=10)
+    english_name = models.CharField(max_length=255)
+
+
+class ProductCountry(models.Model):
+    """Represents a production country of the movie."""
+
+    name = models.CharField(max_length=255)
+    iso_3166_1 = models.CharField(max_length=10)
+
+
+class ProductCompany(models.Model):
+    """Represents a production company of the movie."""
+
+    name = models.CharField(max_length=255)
+    logo_path = models.CharField(max_length=255)
+    origin_country = models.CharField(max_length=255)
+
+
 class Movie(TMDBAPIMixin, models.Model):
     """Represents a movie with its basic information, such as title, release date, runtime, and genres."""
 
@@ -31,12 +55,9 @@ class Movie(TMDBAPIMixin, models.Model):
     overview = models.TextField()
     popularity = models.FloatField()
     poster_path = models.CharField(max_length=255)
-    production_companies = models.CharField(max_length=255)
-    production_countries = models.CharField(max_length=255)
     release_date = models.DateField()
     revenue = models.IntegerField()
     runtime = models.IntegerField()
-    spoken_languages = models.CharField(max_length=255)
     status = models.CharField(max_length=50)
     tagline = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
@@ -45,8 +66,23 @@ class Movie(TMDBAPIMixin, models.Model):
     vote_count = models.IntegerField()
 
     # Relationships
+    production_company = models.ForeignKey(
+        "movies.ProductCompany",
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    production_country = models.ForeignKey(
+        "movies.ProductCountry",
+        on_delete=models.CASCADE,
+        null=True,
+    )
     collection = models.ForeignKey(
         "movies.Collection",
+        on_delete=models.CASCADE,
+        null=True,
+    )
+    spoken_language = models.ForeignKey(
+        "movies.Language",
         on_delete=models.CASCADE,
         null=True,
     )

@@ -1,5 +1,3 @@
-Here is a sample README.md file for your project:
-
 # **Movie Rankings API**
 
 ## **Overview**

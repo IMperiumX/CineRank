@@ -87,3 +87,13 @@ class MovieQuerySet(models.QuerySet):
         return self.annotate(ranking=self.get_ranking(**kwargs)).order_by("-ranking")[
             :count
         ]
+
+    def get_user_recommendations(self, user_id, count=100, **kwargs):
+        from movies.models import UserMoviePreference
+
+        user_preferences = UserMoviePreference.objects.filter(user_id=user_id)
+        return (
+            self.annotate(ranking=self.get_ranking(**kwargs))
+            .filter(id__in=user_preferences.values_list("movie_id", flat=True))
+            .order_by("-ranking")[:count]
+        )

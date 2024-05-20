@@ -89,3 +89,16 @@ class Movie(TMDBAPIMixin, models.Model):
     genre = models.ForeignKey("movies.Genre", on_delete=models.CASCADE)
 
     objects = MovieQuerySet.as_manager()
+
+
+class UserMoviePreference(models.Model):
+    rating = models.FloatField()
+    genre = models.CharField(max_length=255)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+    movie = models.ForeignKey("movies.Movie", on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ("user", "movie")
+        ordering = ("-created_at",)

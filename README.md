@@ -103,3 +103,5 @@ If you have any questions or need help with the project, feel free to reach out 
    - **Genre Preferences:** User-selected genres are boosted in the rankings.
 
 2. **Normalization & Scoring:** Each factor is normalized to a standard scale and combined using a weighted formula. The weights determine the importance of each factor, allowing for customization of the ranking logic.
+
+3. **User Preferences:** The engine learns from user ratings and genre preferences (stored in the `UserMoviePreference` model) to tailor recommendations to individual tastes.

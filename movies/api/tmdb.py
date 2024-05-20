@@ -89,7 +89,7 @@ class TMDBAPIMixin:
         return response["results"]
 
     def fetch_movie_by_id(tmdb_id: int) -> dict:
-        api = TMDBAPIMixin(settings.TMDB_API_KEY)
+        api = TMDBAPIMixin()
         movie_data = api.get_movie(tmdb_id)
         movie_data["credits"] = api.get_movie_credits(tmdb_id)
         return movie_data

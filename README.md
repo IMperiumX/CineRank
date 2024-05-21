@@ -42,29 +42,82 @@ This is a Django-based API that allows users to set and manage their top 100 mov
 - `GET /api/movies/`: Retrieve a user's movie list
 
 ```json
-{
-  "movies": [
-    {
-      "id": 1,
-      "title": "Movie 1",
-      "rank": 1
-    },
-    {
-      "id": 2,
-      "title": "Movie 2",
-      "rank": 2
-    }
-  ]
-}
+[
+  {
+    "tmdb_id": 123,
+    "imdb_id": "tt0123456",
+    "title": "Movie Title",
+    "genre": "Action",
+    "production_company": "Warner Bros.",
+    "production_country": "US",
+    "collection": "DC Universe",
+    "spoken_language": "en",
+    "is_highly_rated": true,
+    "poster_path": "/path/to/poster",
+    "release_date": "2020-01-01",
+    "vote_average": 8.5,
+    "vote_count": 1000
+  },
+  {
+    "tmdb_id": 456,
+    "imdb_id": "tt6789012",
+    "title": "Another Movie",
+    "genre": "Comedy",
+    "production_company": "Universal Pictures",
+    "production_country": "US",
+    "collection": null,
+    "spoken_language": "en",
+    "is_highly_rated": false,
+    "poster_path": "/path/to/poster",
+    "release_date": "2019-06-01",
+    "vote_average": 7.2,
+    "vote_count": 500
+  }
+]
 ```
 
-- `POST /api/movies/create/`: Create a new movie entry
+Request: `GET api/movies/get_user_recommendations/`
+
+Response:
 
 ```json
-{
-  "title": "New Movie",
-  "rank": 3
-}
+
+[
+    {
+        "tmdb_id": 123,
+        "imdb_id": "tt0123456",
+        "title": "Movie Title",
+        "genre": "Action",
+        "production_company": "Warner Bros.",
+        "production_country": "US",
+        "collection": "DC Universe",
+        "spoken_language": "en",
+        "is_highly_rated": true,
+        "poster_path": "/path/to/poster",
+        "release_date": "2020-01-01",
+        "vote_average": 8.5,
+        "vote_count": 1000,
+        "ranking": 0.95
+    },
+    {
+        "tmdb_id": 456,
+        "imdb_id": "tt6789012",
+        "title": "Another Movie",
+        "genre": "Comedy",
+        "production_company": "Universal Pictures",
+        "production_country": "US",
+        "collection": null,
+        "spoken_language": "en",
+        "is_highly_rated": false,
+        "poster_path": "/path/to/poster",
+        "release_date": "2019-06-01",
+        "vote_average": 7.2,
+        "vote_count": 500,
+        "ranking": 0.85
+    },
+    ...
+]
+
 ```
 
 ### Development
@@ -103,3 +156,18 @@ If you have any questions or need help with the project, feel free to reach out 
 2. **Normalization & Scoring:** Each factor is normalized to a standard scale and combined using a weighted formula. The weights determine the importance of each factor, allowing for customization of the ranking logic.
 
 3. **User Preferences:** The engine learns from user ratings and genre preferences (stored in the `UserMoviePreference` model) to tailor recommendations to individual tastes.
+
+4. **Optimization:**
+   - **Caching:** Rankings are cached for performance.
+   - **Database Indexes:** Optimized for fast query execution.
+   - **Precalculated Scores (Optional):** Can be implemented for further performance enhancement.
+
+### Future Enhancements
+
+- **Collaborative Filtering:** Explore incorporating collaborative filtering techniques to leverage similarities in user behavior for even more personalized recommendations.
+- **Ranking Explanation:** Provide users with insights into why a movie was recommended (e.g., "Based on your love for sci-fi and high ratings, we think you'll enjoy...").
+- **More Factors:** Experiment with additional factors like cast, crew, or keywords.
+
+### Get Involved
+
+We welcome contributions to improve and expand this movie ranking engine. Feel free to open issues for suggestions or submit pull requests with enhancements!

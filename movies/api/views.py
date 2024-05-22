@@ -14,7 +14,6 @@ from movies.models import (
     ProductCompany,
     ProductCountry,
 )
-
 from .serializers import (
     CollectionSerializer,
     GenreSerializer,

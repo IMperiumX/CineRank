@@ -45,14 +45,18 @@ class ProductCompanySerializer(serializers.ModelSerializer):
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    # use Prefetch() with custom queryset and to_attr to avoid N+1 queries
     genre = GenreSerializer(read_only=True)
-    production_company = ProductCompanySerializer(many=True, read_only=True)
-    production_country = ProductCountrySerializer(many=True, read_only=True)
+    production_company = ProductCompanySerializer(read_only=True)
+    production_country = ProductCountrySerializer(read_only=True)
     collection = CollectionSerializer(read_only=True)
-    spoken_language = LanguageSerializer(many=True, read_only=True)
+    spoken_language = LanguageSerializer(read_only=True)
 
     # Custom serializer method field
     is_highly_rated = serializers.SerializerMethodField()
+
+    # optional annotated field (ranking)
+    ranking = serializers.IntegerField(read_only=True)
 
     def get_is_highly_rated(self, obj):
         return obj.vote_average >= 8.0
@@ -81,6 +85,7 @@ class MovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Movie
         fields = [
+            "ranking",
             "tmdb_id",
             "imdb_id",
             "adult",

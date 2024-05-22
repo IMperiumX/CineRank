@@ -13,6 +13,7 @@ psycopg2==2.9.9
 
 # Code quality
 pre-commit==3.7.1
+pysnooper==1.2.0
 
 
 ipython==8.24.0

@@ -91,6 +91,22 @@ class Movie(TMDBAPIMixin, models.Model):
     objects = MovieQuerySet.as_manager()
 
 
+class Rating(models.Model):
+    rating = models.IntegerField(
+        choices=[(i, i) for i in range(1, 6)]
+    )  # 1-5 star rating
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    movie = models.ForeignKey("movies.Movie", on_delete=models.CASCADE)
+    user = models.ForeignKey("auth.User", on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (
+            "movie",
+            "user",
+        )  # Ensure each user can rate a movie only once
+
+
 class UserMoviePreference(models.Model):
     rating = models.FloatField()
     genre = models.CharField(max_length=255)
